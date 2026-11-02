@@ -221,7 +221,7 @@ export async function syncRoomsToFirebase(tripId: string, rooms: Room[], isExpli
           const roomMap = new Map<string, Room>();
           // 1. Giữ tất cả phòng hiện có trên Firebase
           remoteData.rooms.forEach((r: Room) => roomMap.set(r.id, r));
-          
+
           // 2. Cập nhật / merge các phòng từ client
           rooms.forEach(r => roomMap.set(r.id, r));
 
@@ -828,9 +828,9 @@ export function getTripImportInfo(trip: Trip): { count: number; importedAt: stri
  * - Nếu nhân viên đã có phòng: Tự động thêm người thân vào phòng hiện tại.
  */
 export async function claimRelative(
-  tripId: string, 
-  employeeCode: string, 
-  relativeId: string, 
+  tripId: string,
+  employeeCode: string,
+  relativeId: string,
   employeeName?: string,
   relation?: RelationType
 ): Promise<{ success: boolean; roomCode?: string; isNewRoom?: boolean; message?: string }> {
@@ -1036,8 +1036,8 @@ export async function claimRelative(
     success: true,
     roomCode,
     isNewRoom,
-    message: isNewRoom 
-      ? `Đã nhận người thân và tự động tạo phòng ${roomCode} (Phòng ${autoCapacity} người${autoCapacity > 2 ? ' do phòng 2 người đã đủ số lượng' : ''})` 
+    message: isNewRoom
+      ? `Đã nhận người thân và tự động tạo phòng ${roomCode} (Phòng ${autoCapacity} người${autoCapacity > 2 ? ' do phòng 2 người đã đủ số lượng' : ''})`
       : `Đã nhận người thân và thêm vào phòng ${roomCode}`
   };
 }
@@ -1046,15 +1046,15 @@ export async function claimRelative(
  * Hủy nhận người thân
  */
 export async function unclaimRelative(
-  tripId: string, 
-  employeeCodeOrId: string, 
+  tripId: string,
+  employeeCodeOrId: string,
   relativeId: string
 ): Promise<{ success: boolean; message: string }> {
   const targetTripId = tripId || getActiveTripId();
   const people = getPeople(targetTripId);
 
   // Tìm relative bằng ID hoặc Code (linh hoạt cả hai)
-  const relative = people.find(p => 
+  const relative = people.find(p =>
     (p.id === relativeId || p.code === relativeId)
   );
 
